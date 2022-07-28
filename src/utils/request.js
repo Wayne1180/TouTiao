@@ -5,7 +5,8 @@ import router from '@/router';
 import { Notify } from 'vant';
 import { getToken } from '@/utils/token.js';
 const axios = theAxios.create({
-    baseURL: 'http://toutiao.itheima.net/',
+    // baseURL: 'http://toutiao.itheima.net/',
+    baseURL: 'http://geek.itheima.net',
     timeout: 20000 // 20秒无响应直接判定超时
 })
 

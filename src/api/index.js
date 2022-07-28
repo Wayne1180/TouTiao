@@ -16,7 +16,7 @@ export const loginAPI = ({ mobile, code }) => request({
     }
 })
 //获取所有频道
-export const getAllChannelsAPI = () => axios({
+export const getAllChannelsAPI = () => request({
     url: '/v1_0/channels',
     method: 'GET'
 })
@@ -25,6 +25,21 @@ export const getAllChannelsAPI = () => axios({
 export const getUserChannelsAPI = () => request({
     url: '/v1_0/user/channels',
     method: 'GET',
+})
+
+// 更新覆盖频道
+export const updateChannelsAPI = ({ channels }) => request({
+    url: '/v1_0/user/channels',
+    method: 'PUT',
+    data: {
+        channels // 用户已选整个频道数组
+    }
+})
+
+// 删除用户指定的频道
+export const removeTheChannelAPI = ({ channelId }) => request({
+    url: `/v1_0/user/channels/${channelId}`,
+    method: 'DELETE'
 })
 
 //获取文章新闻推荐
