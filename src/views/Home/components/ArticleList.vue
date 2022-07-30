@@ -14,13 +14,14 @@
           :key="obj.art_id"
           :artObj="obj"
           @disLikeEV="disLikeFn"
-          @reportEV="reportFn" /></van-list
+          @reportEV="reportFn"
+          @click.native="itemClickFn(obj.art_id)" /></van-list
     ></van-pull-refresh>
   </div>
 </template>
 
 <script>
-import ArticleItem from "@/views/Home/components/ArticleItem";
+import ArticleItem from "@/components/ArticleItem";
 import {
   getAllArticleListAPI,
   dislikeArticleAPI,
@@ -99,6 +100,12 @@ export default {
         type: value,
       });
       Notify({ type: "danger", message: "举报成功" });
+    },
+    // 跳转到详情页面
+    itemClickFn(id) {
+      this.$router.push({
+        path: `/detail?art_id=${id}`,
+      });
     },
   },
 };

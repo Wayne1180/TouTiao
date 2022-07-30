@@ -8,22 +8,37 @@
           <!-- 标题 -->
           <span>{{ artObj.title }}</span>
           <!-- 单图 -->
-          <img
+          <!-- <img
             :src="artObj.cover.images"
             alt=""
             class="thumb"
             v-if="artObj.cover.type == 1"
-          />
+          /> -->
+          <van-image
+            class="thumb"
+            v-if="artObj.cover.type == 1"
+            :src="artObj.cover.images[0]"
+          >
+            <template v-slot:error>图片加载失败</template>
+          </van-image>
         </div>
         <!-- 多图 -->
         <div class="thumb-box" v-if="artObj.cover.type > 1">
-          <img
+          <!-- <img
             :src="imgUrl"
             alt=""
             v-for="(imgUrl, index) in artObj.cover.images"
             class="thumb"
             :key="index"
-          />
+          /> -->
+          <van-image
+            :src="imgUrl"
+            v-for="(imgUrl, index) in artObj.cover.images"
+            class="thumb"
+            :key="index"
+          >
+            <template v-slot:error>图片加载失败</template>
+          </van-image>
         </div>
       </template>
       <!-- label 区域的插槽 -->
@@ -35,7 +50,7 @@
             <span>{{ formatTime(artObj.pubdate) }}</span>
           </div>
           <!-- 反馈按钮 -->
-          <van-icon name="cross" @click="show = true" />
+          <van-icon name="cross" @click.stop="show = true" v-if="isShow" />
         </div>
       </template>
     </van-cell>
@@ -68,6 +83,10 @@ export default {
   },
   props: {
     artObj: Object, //文章的对象
+    isShow: {
+      type: Boolean,
+      default: true, // 例如首页的地方，默认显示x
+    },
   },
   methods: {
     formatTime: timeAgo, // 函数体是timeAgo

@@ -15,6 +15,22 @@ export const loginAPI = ({ mobile, code }) => request({
         code
     }
 })
+
+// 用户关注
+export const userFollowedAPI = ({ userId }) => request({
+    url: '/v1_0/user/followings',
+    method: 'POST',
+    data: {
+        target: userId
+    }
+})
+
+// 用户取关
+export const userUnFollowedAPI = ({ userId }) => request({
+    url: `/v1_0/user/followings/${userId}`,
+    method: 'DELETE'
+})
+
 //获取所有频道
 export const getAllChannelsAPI = () => request({
     url: '/v1_0/channels',
@@ -63,6 +79,19 @@ export const dislikeArticleAPI = ({ artId }) => request({
 
 })
 
+// 对文章点赞
+export const likeArticleAPI = ({ artId }) => request({
+    url: '/v1_0/article/likings',
+    method: 'POST',
+    data: {
+        target: artId
+    }
+})
+export const unLikeArticleAPI = ({ artId }) => request({
+    url: `/v1_0/article/likings/${artId}`,
+    method: 'DELETE'
+})
+
 //反馈垃圾内容
 export const reportArticleAPI = ({ artId, type }) => request({
     url: '/v1_0/article/reports',
@@ -72,4 +101,30 @@ export const reportArticleAPI = ({ artId, type }) => request({
         type: type,
         remark: '遗留问题'
     }
+})
+
+// 获取联想建议
+export const suggestListAPI = ({ keywords }) => request({
+    url: '/v1_0/suggestion',
+    method: 'GET',
+    params: {
+        q: keywords
+    }
+})
+
+// 搜索结果列表
+export const searchResultAPI = ({ page = 1, per_page = 10, q }) => request({
+    url: '/v1_0/search',
+    method: 'GET',
+    params: {
+        page,
+        per_page,
+        q
+    }
+})
+
+// 获取文章详情
+export const detailAPI = ({ artId }) => request({
+    url: `/v1_0/articles/${artId}`,
+    method: 'GET',
 })

@@ -6,7 +6,12 @@
           <img src="@/assets/toutiao_logo.png" alt="" class="logo" />
         </template>
         <template #right>
-          <van-icon name="search" size="0.48rem" color="#fff"></van-icon>
+          <van-icon
+            name="search"
+            size="0.48rem"
+            color="#fff"
+            @click.native="goSearch"
+          ></van-icon>
         </template>
       </van-nav-bar>
     </div>
@@ -158,6 +163,9 @@ export default {
       this.show = false;
       // 让内部的编辑状态回归false
       // this.$refs.editRef.isEdit = false;
+    },
+    goSearch() {
+      this.$router.push("/search");
     },
   },
 };
