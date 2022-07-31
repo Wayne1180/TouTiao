@@ -34,8 +34,16 @@ const directiveObj = {
   install(Vue) {
     Vue.directive('focu', {
       inserted(el) {
-        let theInput = el.querySelector('input')
-        theInput.focus()
+        if (el.nodeName === 'TEXTAREA' || el.nodeName === 'INPUT') {
+          el.focus()
+        } else {
+          // el本身不是输入框，尝试往里获取一下
+          let theInput = el.querySelector('input')
+          let theTextArea = el.querySelector('textarea')
+          if (theInput) theInput.focus()
+          if (theTextArea) theTextArea.focus()
+        }
+
       }
     })
   }

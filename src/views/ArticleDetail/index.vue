@@ -75,6 +75,10 @@
         >
       </div>
     </div>
+    <!-- 文章评论区域 -->
+    <div>
+      <CommentList />
+    </div>
   </div>
 </template>
 
@@ -87,18 +91,21 @@ import {
   likeArticleAPI,
 } from "@/api";
 import { timeAgo } from "@/utils/date.js";
+import CommentList from "@/views/ArticleDetail/CommentList";
 export default {
   data() {
     return {
       artObj: {}, // 文章对象
     };
   },
+  components: {
+    CommentList,
+  },
   async created() {
     const res = await detailAPI({
       artId: this.$route.query.art_id,
     });
     this.artObj = res.data.data;
-    console.log(res);
   },
   methods: {
     formatDate: timeAgo,
