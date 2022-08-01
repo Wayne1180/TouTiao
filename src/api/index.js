@@ -178,3 +178,39 @@ export const detailAPI = ({ artId }) => request({
     url: `/v1_0/articles/${artId}`,
     method: 'GET',
 })
+
+// 用户-获取个人资料(编辑页面使用)
+export const userProfileAPI = () => request({
+    url: '/v1_0/user/profile',
+    method: 'GET'
+})
+
+// 用户-获取基本信息(我的页面显示数据)
+export const getUserInfoAPI = () => request({
+    url: '/v1_0/user',
+    method: 'GET'
+})
+
+// 用户-更新头像
+export const updateUserPhotoAPI = (fd) => request({
+    url: '/v1_0/user/photo',
+    method: 'PATCH',
+    data: fd // fd是外面传进来的new FormData() 表单对象
+})
+
+// 用户-更新基本资料
+export const updateUserProfileAPI = (obj) => {
+    return request({
+        // 判断，有什么值再带什么参数给后台
+        // 写法1：解构赋值，4个判断，往空对象上添加，有值的加上去
+        // 写法2：外面想传几个对象key+value，就直接传给后台
+        url: '/v1_0/user/profile',
+        method: 'PATCH',  // PATCH局部更新  PUT全部更新
+        data: obj
+        // data不会忽略值为null的那对key+value，params遇到null值会忽略不携带此对参数和值给后台
+        // name, // 昵称
+        // gender, // 性别 0男1女
+        // birthday, // 生日 格式字符串
+        // intro, // 个人介绍
+    })
+}

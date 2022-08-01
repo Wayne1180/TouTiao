@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'amfe-flexible' // 引入flexible.js 设置根标签字体大小
-import { NavBar, Form, Field, Button, Tabbar, TabbarItem, Icon, Tab, Tabs, Cell, List, PullRefresh, ActionSheet, Popup, Col, Row, Badge, Search, Image as VanImage, Divider } from 'vant'
+import { NavBar, Form, Field, Button, Tabbar, TabbarItem, Icon, Tab, Tabs, Cell, List, PullRefresh, ActionSheet, Popup, Col, Row, Badge, Search, Image as VanImage, Divider, CellGroup, Tag, Dialog, DatetimePicker } from 'vant'
 
 Vue.use(Form)
 Vue.use(Field)
@@ -25,7 +25,10 @@ Vue.use(Badge)
 Vue.use(Search)
 Vue.use(VanImage)
 Vue.use(Divider)
-
+Vue.use(CellGroup)
+Vue.use(Tag)
+Vue.use(Dialog)
+Vue.use(DatetimePicker)
 
 Vue.config.productionTip = false
 
@@ -33,6 +36,7 @@ Vue.config.productionTip = false
 const directiveObj = {
   install(Vue) {
     Vue.directive('focu', {
+      // 指令所在标签，被插入到真实DOM时才触发，如果标签用display：none隐藏再出现，不会再触发inserted的
       inserted(el) {
         if (el.nodeName === 'TEXTAREA' || el.nodeName === 'INPUT') {
           el.focus()
@@ -43,7 +47,18 @@ const directiveObj = {
           if (theInput) theInput.focus()
           if (theTextArea) theTextArea.focus()
         }
-
+      },
+      update(el) {
+        // 指令所在标签，被更新时触发
+        if (el.nodeName === 'TEXTAREA' || el.nodeName === 'INPUT') {
+          el.focus()
+        } else {
+          // el本身不是输入框，尝试往里获取一下
+          let theInput = el.querySelector('input')
+          let theTextArea = el.querySelector('textarea')
+          if (theInput) theInput.focus()
+          if (theTextArea) theTextArea.focus()
+        }
       }
     })
   }
