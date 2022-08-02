@@ -67,6 +67,7 @@ export default {
         console.log(res);
         Notify({ type: "success", message: "登录成功!" });
         setToken(res.data.data.token);
+        localStorage.setItem("refresh_token", res.data.data.refresh_token);
         // 跳转一定要写在最后，尽量最后执行
         this.$router.replace({
           path: "/layout/home", //因为我们路由规则里layout没有重定向，所以直接在这写全

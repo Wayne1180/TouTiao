@@ -214,3 +214,12 @@ export const updateUserProfileAPI = (obj) => {
         // intro, // 个人介绍
     })
 }
+
+// 用户-刷新token
+export const getNewTokenAPI = () => request({
+    url: '/v1_0/authorizations',
+    method: 'PUT',
+    headers: {
+        Authorization: 'Bearer' + localStorage.getItem('refresh_token')
+    }
+})
