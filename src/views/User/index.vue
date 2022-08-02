@@ -35,7 +35,8 @@
     <!-- 操作面板 -->
     <van-cell-group class="action-card">
       <van-cell icon="edit" title="编辑资料" is-link to="/user_edit" />
-      <van-cell icon="chat-o" title="小思同学" is-link />
+      <!-- <van-cell icon="chat-o" title="小思同学" is-link to="/chat" /> -->
+      <van-cell icon="chat-o" title="小爱同学" @click="linkTo"></van-cell>
       <van-cell icon="warning-o" title="退出登录" is-link @click="quitFn" />
     </van-cell-group>
   </div>
@@ -54,6 +55,7 @@ export default {
   async created() {
     const res = await getUserInfoAPI();
     this.userObj = res.data.data;
+    // this.$store.commit("SET_USERPHOTO", this.userObj.photo);
   },
   methods: {
     quitFn() {
@@ -71,6 +73,14 @@ export default {
           // 点击取消选项
           // on cancel
         });
+    },
+    linkTo() {
+      this.$router.push({
+        path: "/chat",
+        query: {
+          img: this.userObj.photo,
+        },
+      });
     },
   },
 };
