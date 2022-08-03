@@ -134,6 +134,7 @@ export default {
       this.$nextTick(() => {
         document.documentElement.scrollTop =
           this.channelScrollTObj[this.channelId];
+        document.body.scrollTop = this.channelScrollTObj[this.channelId];
       });
     },
     // +号点击方法
@@ -178,10 +179,11 @@ export default {
       this.$router.push("/search");
     },
     scrollFn() {
-      this.$route.meta.scrollT = document.documentElement.scrollTop;
+      this.$route.meta.scrollT =
+        document.documentElement.scrollTop || document.body.scrollTop;
       // 同时保存当前频道的滚动距离
       this.channelScrollTObj[this.channelId] =
-        document.documentElement.scrollTop;
+        document.documentElement.scrollTop || document.body;
     },
   },
   activated() {
@@ -190,6 +192,7 @@ export default {
     // html标签获取scrollTop，滚动的距离，和设置滚动的位置
     // 立刻设置滚动条位置
     document.documentElement.scrollTop = this.$route.meta.scrollT;
+    document.body.scrollTop = this.$route.meta.scrollT;
   },
   // 前提：组件缓存，切走了就是失去激活生命周期方法触发
   // 无组件缓存，被切走了，destroyed销毁生命周期方法
