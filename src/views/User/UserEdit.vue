@@ -76,7 +76,7 @@ import {
   updateUserPhotoAPI,
   updateUserProfileAPI,
 } from "@/api";
-import { Notify } from "vant";
+import Notify from "@/ui/Notify";
 import { formatDate } from "@/utils/date";
 export default {
   name: "UserEdit",
@@ -168,7 +168,9 @@ export default {
   }
 }
 
-::v-deep .van-dialog__content {
+// ::v-deep .van-dialog__content {
+:deep(.van-dialog__content) {
+  // :deep .van-dialog__content {
   text-align: center;
   input {
     padding: 0;

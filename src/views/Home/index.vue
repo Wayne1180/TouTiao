@@ -66,14 +66,15 @@ import ArticleList from "@/views/Home/components/ArticleList";
 import ChannelEdit from "@/views/Home/ChannelEdit";
 //获取不同的文章列表，需要传递不同的id
 export default {
-  methods: {},
   data() {
     return {
       channelId: 0, //tab导航 激活频道ID  默认频道id为0，页面刚打开是推荐频道高亮，对应文章数据
       userChannelList: [], //用户选择的频道列表
       allChannelList: [], // 所有频道列表
       // articleList: [], // 文章列表
-      show: false, // 频道弹出层显示/隐藏
+      show: false, // 频道弹出层显示/隐藏,
+      channelScrollTObj: {}, // 保存每个频道的滚动位置
+      // 值样式构想： {推荐频道ID：滚动距离，html频道ID：自己滚动距离}
     };
   },
   async created() {
@@ -125,6 +126,15 @@ export default {
       //   timestamp: new Date().getTime(),
       // });
       // this.articleList = res2.data.data.results;
+
+      //tab切换后，设置滚动条的位置
+      // tab切换时，这个组件内部，会把切走的容器height设置为0，滚动条因为没有高度回到了顶部
+      // 切回来的一瞬间，没有高度，滚动事件从底下上来也被触发了，所以才把数据里设置为0
+      // 切回来的一瞬间，高度为0，你设置滚动位置也没用
+      this.$nextTick(() => {
+        document.documentElement.scrollTop =
+          this.channelScrollTObj[this.channelId];
+      });
     },
     // +号点击方法
     plusClickFn() {
@@ -167,6 +177,25 @@ export default {
     goSearch() {
       this.$router.push("/search");
     },
+    scrollFn() {
+      this.$route.meta.scrollT = document.documentElement.scrollTop;
+      // 同时保存当前频道的滚动距离
+      this.channelScrollTObj[this.channelId] =
+        document.documentElement.scrollTop;
+    },
+  },
+  activated() {
+    window.addEventListener("scroll", this.scrollFn);
+    // window和document，监听网页滚动的事件
+    // html标签获取scrollTop，滚动的距离，和设置滚动的位置
+    // 立刻设置滚动条位置
+    document.documentElement.scrollTop = this.$route.meta.scrollT;
+  },
+  // 前提：组件缓存，切走了就是失去激活生命周期方法触发
+  // 无组件缓存，被切走了，destroyed销毁生命周期方法
+  // 每个路由
+  deactivated() {
+    window.removeEventListener("scroll", this.scrollFn);
   },
 };
 </script>

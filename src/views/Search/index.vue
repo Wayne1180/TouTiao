@@ -58,13 +58,15 @@
 
 <script>
 import { suggestListAPI } from "@/api";
+import { setStorage, getStorage } from "@/utils/storage";
 export default {
+  name: "Search",
   data() {
     return {
       kw: "", // 搜索关键字
       timer: null, // 防抖的定时器
       suggestList: [], // 联想建议列表文字数组
-      history: JSON.parse(localStorage.getItem("his")) || [], // 搜索历史
+      history: JSON.parse(getStorage("his")) || [], // 搜索历史
     };
   },
   methods: {
@@ -140,7 +142,7 @@ export default {
         // set类型对象 转回 array数组类型
         const theSet = new Set(this.history);
         const arr = Array.from(theSet);
-        localStorage.setItem("his", JSON.stringify(arr));
+        setStorage("his", JSON.stringify(arr));
       },
     },
   },

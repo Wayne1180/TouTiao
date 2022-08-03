@@ -46,13 +46,15 @@
 import { getUserInfoAPI } from "@/api";
 import { Dialog } from "vant";
 import { removeToken } from "@/utils/token";
+import { onActivated } from "vue";
 export default {
   data() {
     return {
       userObj: {}, // 用户对象
     };
   },
-  async created() {
+  // async created() {
+  async activated() {
     const res = await getUserInfoAPI();
     this.userObj = res.data.data;
     // this.$store.commit("SET_USERPHOTO", this.userObj.photo);

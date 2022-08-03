@@ -48,7 +48,8 @@
 <script>
 import { loginAPI } from "@/api";
 import { setToken } from "@/utils/token";
-import { Notify } from "vant";
+import Notify from "@/ui/Notify.js";
+import { setStorage } from "@/utils/storage";
 export default {
   data() {
     return {
@@ -64,13 +65,13 @@ export default {
       this.isLoading = true;
       try {
         const res = await loginAPI(this.user);
-        console.log(res);
+        // console.log(res);
         Notify({ type: "success", message: "登录成功!" });
         setToken(res.data.data.token);
-        localStorage.setItem("refresh_token", res.data.data.refresh_token);
+        setStorage("refresh_token", res.data.data.refresh_token);
         // 跳转一定要写在最后，尽量最后执行
         this.$router.replace({
-          path: "/layout/home", //因为我们路由规则里layout没有重定向，所以直接在这写全
+          path: this.$route.query.path || "/layout/home", //因为我们路由规则里layout没有重定向，所以直接在这写全
         });
       } catch (error) {
         Notify({ type: "danger", message: "账号或密码错误" });

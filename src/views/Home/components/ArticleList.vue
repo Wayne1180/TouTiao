@@ -27,7 +27,7 @@ import {
   dislikeArticleAPI,
   reportArticleAPI,
 } from "@/api";
-import { Notify } from "vant";
+import Notify from "@/ui/Notify";
 
 // 问题 网页刚打开，created和onload里请求同时发送，请求的都是最新数据   两次一样的数据一合并，数据重复，key重复了   原因  组件挂载时就会判定一次是否触底
 export default {
